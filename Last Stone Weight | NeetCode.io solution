@@ -1,0 +1,36 @@
+# This is a NeetCode example technical interview question solution
+# The task involves a list of stones(integers)
+# The task is to "smash"(subtract) stones with the subtractor always being of smaller or equal value
+# This is done until there is only one value in the list
+
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+
+        # I found it easiest to solve by first sorting the list in descending order.
+        # This allows for subtraction of smaller/equal values from the previous to be streamlined as the first value will always be the greatest
+        stones = sorted(stones, reverse = True)
+
+        # A while loop is nice because it will keep going until there is only 1 stone left(the solution).
+        while len(stones) > 1:
+
+            # This subtracts the second stone from the first. The first stone will always be larger, so the results will be a positive integer.
+            res = stones[0] - stones[1]
+
+            # Because the difference of the stones has been stored in an integer, both must be removed from the list
+            stones.pop(0)
+            stones.pop(0)
+
+            # This goes ahead and checks if the length of the list is zero or not. To prevent an error of the while loop going another iteration.
+            # If the length is 0, then it weill return the res value.
+            if len(stones) == 0:
+                return res
+
+            # If the stones list still has a length greater than 0 and it is important to res to the list as long as it is not 0.
+            if res != 0:
+                 stones.append(res)
+
+                # The list is sorted in descending order once the res value is added in order to keep the same relationship of larger balues being subtracted by smaller/equal values in future while loop iterations.
+                 stones = sorted(stones, reverse = True)
+
+        # Once the while loop is broken, the first and only value left in the stones list if the answer!
+        return stones[0]
