@@ -1,0 +1,80 @@
+# This checks for a valid sudoku board.
+# It doesn't necessarily check for solvability, but rather that it follows the sudoku rules
+# Essentially there cannot be 2 of the same number in the same row, column, or square of 9
+# The function simply looks through the board list for numeric values and checks that each of these three parameters are met
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row_count = 0
+        for row in board:
+            row_count += 1
+            for ele in range(len(row)):
+
+                # Checks for a numeric value in the row
+                if row[ele].isnumeric() == True:
+
+                    # If the count is ever greter than 1 in the same row, the board is invalid
+                    if row.count(row[ele]) > 1:
+                        return False
+
+                    # Cycles for the column and square of 9 parameters
+                    else:
+                        count = 0
+
+                        # Cycles through the column to watch for duplicate values
+                        for i in board:
+                            if i[ele] == row[ele]:
+                                count +=1
+                        if count > 1:
+                            return False
+                        count = 0
+
+                        # Each if/ elif statement checks for a different box of the 9 boxes depending on where the value being searched is
+                        if row_count <= 3 and ele < 3:
+                            for i in range(0,3):
+                                for j in range(0,3):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 3 and ele < 6:
+                            for i in range(0,3):
+                                for j in range(3,6):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 3 and ele < 9:
+                            for i in range(0,3):
+                                for j in range(6,9):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 6 and ele < 3:
+                            for i in range(3,6):
+                                for j in range(0,3):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 6 and ele < 6:
+                            for i in range(3,6):
+                                for j in range(3,6):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 6 and ele < 9:
+                            for i in range(3,6):
+                                for j in range(6,9):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 9 and ele < 3:
+                            for i in range(6,9):
+                                for j in range(0,3):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 9 and ele < 6:
+                            for i in range(6,9):
+                                for j in range(3,6):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        elif row_count <= 9 and ele < 9:
+                            for i in range(6,9):
+                                for j in range(6,9):
+                                    if board[i][j] == row[ele]:
+                                        count +=1
+                        if count > 1:
+                            return False
+        return True
