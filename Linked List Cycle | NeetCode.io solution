@@ -1,0 +1,50 @@
+# This problem is title "Linked List Cycle"
+# The purpose is to look for a cycle in a linked list and return True if so, otherwise return False
+# Because this problem was relatively straight forward, I decided to create two different solutions
+
+# My first thought process was to increment one head at double the rate of the other.
+# If they are ever equal, it means there must be a cycle in the list at some point.
+class Solution1:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+
+        # Assign both variables to the starting node of the list
+        fast = head
+        slow = head
+
+        # Make sure both are None in order to not have a NoneType error
+        while fast and fast.next:
+
+            # Fast is set to advance two nodes for every one node Slow does
+            fast = fast.next.next
+            slow = slow.next
+
+            # If/when slow is the same node as fast, there must be a cycle in the list, as they were iterated at different rates
+            if slow == fast:
+                return True
+
+        # The function returns false if the loop breaks, meaning no cycle was found
+        return False
+
+# My thought process here was to create a values set to serve as a hash set of all the nodes.
+# If the loop iterates through a previosuly passed node, then it will be in the values list and recognized by the functions
+# This means that there is a cycle and will return True
+class Solution2:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+
+        # Assign curr to the starting node of the list and values to an empty set
+        values = set()
+        curr = head
+
+        # Iterates through the nodes in the list so long as the current node is not None
+        while curr:
+
+            # Sees if the current node is already in the values set. If so, then there is a cycle and True is returned
+            if curr in values:
+                return True
+
+            # The current node is added to the values list and the current node is iterated to the next.
+            values.add(curr)
+            curr = curr.next
+
+        # If the while loop is broken, then false is returned and the list has no cycle
+        return False
