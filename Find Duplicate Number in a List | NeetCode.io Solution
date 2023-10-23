@@ -1,0 +1,25 @@
+# This is a linked list technical interview practice problem on NeetCode.io
+# The problem involves searching for a repeated number in a list
+# Each list has only one repeated number
+
+# My line of thinking was to create a dictionary that creates a key for the number
+# and a value for the count of that number.
+# If the value already exists in the dictionary, then the function will simply return the number
+# Using a dictionary is better for time limit parameters than a list because it acts as a hashset for the function which runs faster than appending.
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+
+        # The dictionary that keeps track of all values passes and their counts
+        num_count = {}
+
+        # For loop to iterate through each value in the list
+        for num in nums:
+
+            # If to check if the number is already in the dictionary, if so then it will return the number
+            if num in num_count:
+                return num
+
+            # This runs if the number is not present in the dictionary, adding it with a count of 1
+            else:
+                num_count[num] = 1
