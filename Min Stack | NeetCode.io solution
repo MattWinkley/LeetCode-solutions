@@ -1,0 +1,48 @@
+# This is a NeetCode.io practice problem where a stack is created
+# Each elemtn is piled onto the other
+# push should push a new value on the top of the stack
+# pop should remove the element on the top of the stack
+# top should return the element in the top of the stack
+# getMin should return the smallest value of the entire stack
+
+
+# My thinking is that a list could be subject to altering of order for each value added
+# I therefore thought of creating a dictionary where each value added gets an index as the key
+# Index is incremented by 1 for each value added therefore the mode recent value will always have the highest index value, meaning it's on the top of the stack
+# There are more efficient ways to solve this problem, I just like how overengineered this solution is.
+# Ordering will never be a problem is you were to add other functions to the class as the indexes will stay in ascending order for when the values were added.
+
+class MinStack:
+
+    # The stack and index variables are created
+    def __init__(self):
+        self.stack = {}
+        self.index = 0
+
+    # Index is incremented by 1 each time a new value is added
+    # The value is added to the dictionary with the incremented index as its key
+    def push(self, val: int) -> None:
+        self.index += 1
+        self.stack[self.index] = val
+        return
+
+    # The highest index,value is deleted from the dictionary, which will always be the most recently added value (aka on the top of the stack)
+    def pop(self) -> None:
+        del self.stack[max(self.stack)]
+        return
+
+    # Returns the element that is on the top of the stack, which will always be the highest index value, which is the key
+    def top(self) -> int:
+        return self.stack[max(self.stack)]
+
+    # Returns the min of the list of all values in the stack
+    def getMin(self) -> int:
+        return min(self.stack.values())
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
