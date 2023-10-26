@@ -1,0 +1,94 @@
+# This is a technical interview practice problem on NeetCode.io called Permutations
+# The purpose of this is to take a list of numbers and return every possible combination of the list in a list of lists
+# The array is made up of unique integers 0 - 9 and have length range 1 - 6.
+
+# My thought process was first understanding the parameters of the situation, a max length of 6 unique integers.
+# Because there are only 6 lengths to consider I created an if/elif statement for each situation.
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+
+        # This is the decremented length of the list in order to easily index which max_len to user later.
+        length = len(nums) - 1
+
+        # Hashset will hold the result of all unique lists
+        hashset = set()
+
+        # Each variation if saved to this tuple at some point then added to the overall hashset.
+        # I chose tuple since it is being added to a set and I do not need mutability.
+        temp_hash = tuple()
+
+        # This is a calculation of the amount of permutations for each length list.
+        # The needed max_len returned is determined by the length variable created above.
+        max_len = [1,2,6,24,120,720]
+
+        # This while loop continues until the length of the hashset reaches the expected length of permutations for the size of nums.
+        while len(hashset) != max_len[length]:
+
+            # The first few lengths are solved easily and differently.
+
+            # Because there is only 1 number in this nums list, only that must be returned.
+            if length == 0:
+                return [nums]
+
+            # Because there are only 2 numbers in this nums list, the original list and the reversed list are the only two permutations.
+            elif length == 1:
+                return [nums, [nums[1], nums[0]]]
+
+            # The remaining lengths all follow the same pattern.
+
+            # A series of nested for loops is created to iterate through nums.
+            # Each inside loop is checked to not be equal to any of the outer iteration values.
+            # If none are equal to each other, then the set of all iterations are added in a tuple to the hashset as a permutation.
+            # This is done until the max_len is met for the hashset and hashset is returned.
+
+            elif length == 2:
+                for i in nums:
+                    for j in nums:
+                        if j != i:
+                            for k in nums:
+                                if k != i and k != j:
+                                    temp_hash = (i,j,k)
+                                    hashset.add(temp_hash)
+                return hashset
+            
+            elif length == 3:
+                for i in nums:
+                    for j in nums:
+                        if j != i:
+                            for k in nums:
+                                if k != i and k != j:
+                                    for n in nums:
+                                        if n!= i and n != j and n!= k:
+                                            temp_hash = (i,j,k,n)
+                                            hashset.add(temp_hash)
+                return hashset
+            
+            elif length == 4:
+                for i in nums:
+                    for j in nums:
+                        if j != i:
+                            for k in nums:
+                                if k != i and k != j:
+                                    for n in nums:
+                                        if n!= i and n != j and n!= k:
+                                            for m in nums:
+                                                if m != i and m != j and m != k and m != n:
+                                                    temp_hash = (i,j,k,n,m)
+                                                    hashset.add(temp_hash)
+                return hashset
+            
+            elif length == 5:
+                for i in nums:
+                    for j in nums:
+                        if j != i:
+                            for k in nums:
+                                if k != i and k != j:
+                                    for n in nums:
+                                        if n!= i and n != j and n!= k:
+                                            for m in nums:
+                                                if m != i and m != j and m != k and m != n:
+                                                    for t in nums:
+                                                        if t != i and t != j and t != k and t != n and t != m:
+                                                            temp_hash = (i,j,k,n,m,t)
+                                                            hashset.add(temp_hash)
+                return hashset
