@@ -1,0 +1,21 @@
+# This is a technical interview practice question called Subsets II
+# The goal is to return a list of all the subsets of a list(nums)
+# The returned list cannot return subsets with the identical length and values.
+
+# My thinking is to use the same process for creating subsets as the first subsets problem except add sorted to each added subset.
+# The sorted allows for the result to not have copies when added to a set.
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+
+        # The list of all subsets including copies. Each subset is sorted so that they can be removed when added as tuples to hashset later.
+        listed = [sorted([nums[j] for j in range(len(nums)) if i >> j & 1]) for i in range(2 ** len(nums))]
+
+        # Using a set so that duplicates are removed by nature.
+        hashset = set()
+
+        # For loop iterating through the sublists and adding them as tuples to the hashset
+        for ele in listed:
+            hashset.add(tuple(ele))
+
+        # Hashset is returned
+        return hashset
